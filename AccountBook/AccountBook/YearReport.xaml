@@ -1,0 +1,87 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="AccountBook.YearReport"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:local="clr-namespace:AccountBook.Converter;assembly=AccountBook"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="728" d:DesignWidth="480" Loaded="PhoneApplicationPage_Loaded">
+
+    <phone:PhoneApplicationPage.Resources>
+        <local:VoucherDescConverter  x:Key="VoucherDescConverter"/>
+        <local:VoucherTypeConverter  x:Key="VoucherTypeConverter"/>
+    </phone:PhoneApplicationPage.Resources>
+    <Grid x:Name="LayoutRoot">
+        <Grid.Background>
+            <ImageBrush  ImageSource="Skin/PageBG.jpg"></ImageBrush>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock x:Name="ApplicationTitle" Foreground="#FFEB6416" Text="年报表分析" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Foreground="#FFEB6416" Text="" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <!--记账记录列表头项目-->
+            <StackPanel Height="31" Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Top">
+                <Border BorderThickness="0,0,5,0"  Width="90" Background="#FFEB6416">
+                    <TextBlock TextWrapping="Wrap" Text="收支" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <Border BorderThickness="0,0,5,0"  Width="90" Background="#FFEB6416">
+                    <TextBlock TextWrapping="Wrap" Text="金额" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <Border BorderThickness="0,0,5,0"  Width="190" Background="#FFEB6416">
+                    <TextBlock TextWrapping="Wrap" Text="备注" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <Border BorderThickness="0,0,5,0"  Width="90" Background="#FFEB6416">
+                    <TextBlock TextWrapping="Wrap" Text="类别" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+            </StackPanel>
+            <!--记账记录数据绑定列表-->
+            <ListBox x:Name="listYearReport" Margin="0,35,0,80"  Grid.Row="1" >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock  Foreground="#FFEB6416" FontSize="30"  Text="{Binding Type,  Converter={StaticResource VoucherTypeConverter}}" TextWrapping="NoWrap" HorizontalAlignment="Center"  Width="90" />
+                                <TextBlock  Foreground="#FFEB6416" FontSize="30" Text="{Binding Money}" TextWrapping="NoWrap" HorizontalAlignment="Center" Width="90" />
+                                <TextBlock  Foreground="#FFEB6416"  Text="{Binding Desc,  Converter={StaticResource VoucherDescConverter}}" TextWrapping="NoWrap" HorizontalAlignment="Center"  Width="190" />
+                                <TextBlock  Foreground="#FFEB6416" FontSize="20" Text="{Binding Category}" TextWrapping="NoWrap" HorizontalAlignment="Center" Width="93"   />
+                            </StackPanel>
+                            <TextBlock Foreground="#FFEB6416" FontSize="20" Text="{Binding DT}" TextWrapping="NoWrap" HorizontalAlignment="Right" Width="200"  />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <!--显示本年收入、支出和结余-->
+            <StackPanel Height="57"  Orientation="Horizontal" Grid.Row="2" VerticalAlignment="Bottom" Margin="0,0,0,10">
+                <Border BorderThickness="0,0,0,0"  Width="155" Background="#FFEB6416">
+                    <TextBlock TextWrapping="Wrap" x:Name="inTB" Text="" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <Border BorderThickness="0,0,0,0"  Width="155" Background="#FFEB6416">
+                    <TextBlock TextWrapping="Wrap" x:Name="exTB" Text="" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <Border BorderThickness="0,0,0,0"  Width="155" Background="#FFEB6416">
+                    <TextBlock TextWrapping="Wrap" x:Name="balanceTB" Text="" Foreground="White" FontWeight="Bold"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+            </StackPanel>
+        </Grid>
+    </Grid>
+    <!--菜单栏-->
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" BackgroundColor="#FFEB6416" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.First.rest.png" Text="上一年" Click="ApplicationBarIconButton_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.Last.rest.png" Text="下一年" Click="ApplicationBarIconButton_Click"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+</phone:PhoneApplicationPage>

@@ -1,0 +1,155 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="AccountBook.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" 
+    xmlns:sltoolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" 
+    sltoolkit:TiltEffect.IsTiltEnabled="True"
+    xmlns:c4fToolkit="clr-namespace:Coding4Fun.Phone.Controls;assembly=Coding4Fun.Phone.Controls" 
+    xmlns:c4fToolkitBinding="clr-namespace:Coding4Fun.Phone.Controls.Binding;assembly=Coding4Fun.Phone.Controls" 
+    xmlns:local="clr-namespace:AccountBook.Converter;assembly=AccountBook"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800" 
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="False">
+    <phone:PhoneApplicationPage.Resources>
+        <Storyboard 
+            x:Name="trexStoryboard" 
+            AutoReverse="True" 
+            RepeatBehavior="Forever"  >
+            <DoubleAnimationUsingKeyFrames 
+				Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)"
+				Storyboard.TargetName="image">
+                <SplineDoubleKeyFrame KeyTime="0:0:1"/>
+                <SplineDoubleKeyFrame KeyTime="0:0:36" Value="-307"/>
+                <SplineDoubleKeyFrame KeyTime="0:0:37" Value="-307" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <local:VoucherDescConverter  x:Key="VoucherDescConverter"/>
+        <local:VoucherTypeConverter  x:Key="VoucherTypeConverter"/>
+    </phone:PhoneApplicationPage.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <controls:Panorama>
+            <controls:Panorama.Background>
+                <ImageBrush ImageSource="Skin/PanoramaBG.jpg" />
+            </controls:Panorama.Background>
+            <controls:Panorama.Title>
+                <StackPanel Orientation="Horizontal">
+                    <Image Margin="12,80,0,0" MaxHeight="180" Source="Skin/logo.png" />
+                    <TextBlock Margin="0,30,0,0" Foreground="#FFEB6416" Text="记账本" />
+                    <!--<TextBlock Margin="0,10,0,0" Foreground="Black"  Text="Account" />-->
+                </StackPanel>
+            </controls:Panorama.Title>
+            <controls:PanoramaItem x:Name="_columnItem" Foreground="Black" >
+                <Grid>
+                    <ScrollViewer>
+                        <StackPanel>
+                            <!--收入、支出-->
+                            <StackPanel Orientation="Horizontal">
+                                <c4fToolkit:Tile Margin="0, 0, 12, 0" Background="#FFEB6416" Width="203" Height="203" Title="收入"  Click="Income_Tile_Click">
+                                    <Grid>
+                                        <Image Source="Images/inlogo.png" Stretch="None" />
+                                        <c4fToolkit:TileNotification x:Name="SummaryIncome"  Content="总收入：0" Background="{StaticResource PhoneAccentBrush}" Margin="0,2,0,0" />
+                                    </Grid>
+                                </c4fToolkit:Tile>
+                                <c4fToolkit:Tile Margin="0, 0, 12, 0" Background="#FFEB6416" Width="203" Height="203" Title="支出" Click="Expenses_Tile_Click">
+                                    <Grid>
+                                        <Image Source="Images/outlogo.png" Stretch="None" />
+                                        <c4fToolkit:TileNotification  x:Name="SummaryExpenses" Content="总支出：0"  Background="{StaticResource PhoneAccentBrush}" Margin="0,2,0,0" />
+                                    </Grid>
+                                </c4fToolkit:Tile>
+                            </StackPanel>
+                            <!--月结余、年结余-->
+                            <StackPanel Orientation="Horizontal" Margin="0, 12" >
+                                <c4fToolkit:Tile Margin="0, 0, 12, 0" Background="#FFEB6416" Width="203" Height="203" Title="月报表" Click="MouthReport_Click">
+                                    <Grid>
+                                        <Image Source="Images/mlogo.png"  Stretch="None" />
+                                        <c4fToolkit:TileNotification x:Name="MouthBalance"  Content="月结余：0"  Background="{StaticResource PhoneAccentBrush}" Margin="0,2,0,0"/>
+                                    </Grid>
+                                </c4fToolkit:Tile>
+                                <c4fToolkit:Tile Margin="0, 0, 12, 0" Background="#FFEB6416" Width="203" Height="203" Title="年报表" Click="YearReport_Click">
+                                    <Grid>
+                                        <Image Source="Images/ylogo.png"  Stretch="None" />
+                                        <c4fToolkit:TileNotification x:Name="YearBalance" Content="年结余：0"  Background="{StaticResource PhoneAccentBrush}" Margin="0,2,0,0" />
+                                    </Grid>
+                                </c4fToolkit:Tile>
+                            </StackPanel>
+                            <!--查询、报表-->
+                            <StackPanel Orientation="Horizontal">
+                                <c4fToolkit:Tile Margin="0, 0, 12, 0" Background="#FFEB6416" Width="203" Height="203" Title="查询" Click="Search_Click">
+                                    <Grid>
+                                        <Image Source="Images/searchlogo.png"  Stretch="None" />
+                                    </Grid>
+                                </c4fToolkit:Tile>
+                                <c4fToolkit:Tile Margin="0, 0, 12, 0" Background="#FFEB6416" Width="203" Height="203" Title="图表分析" Click="Chart_Click">
+                                    <Grid>
+                                        <Image Source="Images/piclogo.png" Stretch="None" />
+                                    </Grid>
+                                </c4fToolkit:Tile>
+                            </StackPanel>
+                            <!--我的理财计划-->
+                            <c4fToolkit:Tile Background="#FFEB6416" HorizontalAlignment="Left" Margin="0, 12" Width="418" Height="173" c4fToolkitBinding:FrameworkElementBinding.ClipToBounds="True" Title="我的理财计划" Click="Note_Click">
+                                <Grid>
+                                    <Canvas>
+                                        <Image  x:Name="image" Source="/Coding4Fun.Phone.TestApplication;component/Media/trex_360width.jpg" Stretch="None">
+                                            <Image.RenderTransform>
+                                                <CompositeTransform />
+                                            </Image.RenderTransform>
+                                        </Image>
+                                    </Canvas>
+                                    <c4fToolkit:TileNotification Padding="18, 0" Background="{StaticResource PhoneAccentBrush}">
+                                        <TextBlock>这个月的支出要限制在500内！！</TextBlock>
+                                        <!-- in 7.1, you can skip the need for TextBlock -->
+                                    </c4fToolkit:TileNotification>
+                                </Grid>
+                            </c4fToolkit:Tile>
+                            <!--类别、设置-->
+                            <StackPanel Orientation="Horizontal">
+                                <c4fToolkit:Tile Margin="0, 0, 12, 0" Background="#FFEB6416" Width="203" Height="203" Title="添加类别" Click="AddCategory_Click">
+                                    <Grid>
+                                        <Image Source="Images/catelogo.png" Stretch="None" />
+                                    </Grid>
+                                </c4fToolkit:Tile>
+                                <c4fToolkit:Tile Margin="0, 0, 12, 0" Background="#FFEB6416" Width="203" Height="203" Title="设置" Click="Setting_Click">
+                                    <Grid>
+                                        <Image Source="Images/setlogo.png" Stretch="None" />
+                                    </Grid>
+                                </c4fToolkit:Tile>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </controls:PanoramaItem>
+            <controls:PanoramaItem x:Name="_historyItem" Foreground="Black">
+                <controls:PanoramaItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="今日账单情况" FontSize="{StaticResource PhoneFontSizeExtraLarge}" Margin="0,0,5,0" />
+                    </StackPanel>
+                </controls:PanoramaItem.Header>
+                <Grid>
+                    <ListBox x:Name="listToday" >
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="12,0,0,0">
+                                    <TextBlock  Foreground="#FFEB6416" FontSize="30"  Text="{Binding Type,  Converter={StaticResource VoucherTypeConverter}}" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" Width="69" />
+                                    <TextBlock  Foreground="#FFEB6416"  Text="{Binding Money}" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" />
+                                    <TextBlock  Foreground="#FFEB6416"  Text="{Binding Desc,  Converter={StaticResource VoucherDescConverter}}" TextWrapping="NoWrap" HorizontalAlignment="Left" TextAlignment="Right" VerticalAlignment="Center" Width="118" />
+                                    <TextBlock  Foreground="#FFEB6416" FontSize="12" Text="{Binding DT}" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" Width="94"  />
+                                    <TextBlock  Foreground="#FFEB6416" FontSize="20" Text="{Binding Category}" TextWrapping="NoWrap" TextAlignment="Right" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70"   />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </controls:PanoramaItem>
+        </controls:Panorama>
+    </Grid>
+</phone:PhoneApplicationPage>
