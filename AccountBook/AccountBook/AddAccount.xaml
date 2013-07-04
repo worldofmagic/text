@@ -11,8 +11,7 @@
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="728"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
-    Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait"  Orientation="Portrait">
+    SupportedOrientations="Portrait"  Orientation="Portrait" Foreground="Black">
 
     <phone:PhoneApplicationPage.Resources>
         <DataTemplate x:Key="DataTemplate1">
@@ -45,7 +44,7 @@
 
     <Grid x:Name="LayoutRoot">
         <!--使用Pivot控件来布局-->
-        <controls:Pivot x:Name="pivot" Title="添加一笔记录" Foreground="#FFEB6416">
+        <controls:Pivot x:Name="pivot" Title="添加一笔记录" Foreground="#FF19F703">
             <controls:Pivot.Background>
                 <ImageBrush  ImageSource="Skin/PageBG.jpg"></ImageBrush>
             </controls:Pivot.Background>
@@ -54,7 +53,7 @@
                 <ScrollViewer>
                      <Grid>
                         <StackPanel Orientation="Vertical" VerticalAlignment="Top">
-                            <TextBlock Margin="12,0,0,0" HorizontalAlignment="Left" Height="29" TextWrapping="Wrap" Text="金额" VerticalAlignment="Top" Width="106" />
+                            <TextBlock Margin="12,0,0,0" HorizontalAlignment="Left" Height="29" TextWrapping="Wrap" Text="金额" VerticalAlignment="Top" Width="106"  />
                             <TextBox x:Name="textBox_Income" TextWrapping="Wrap" InputScope="Number" />
                             <TextBlock Margin="12,0,0,0" HorizontalAlignment="Left" Height="29" TextWrapping="Wrap" Text="说明" VerticalAlignment="Top" Width="106"  />
                             <TextBox x:Name="textBox_IncomeDesc"  TextWrapping="Wrap" InputScope="Chat" />
@@ -69,7 +68,7 @@
                 </ScrollViewer>
             </controls:PivotItem>
             <!--支出模式的录入界面-->
-            <controls:PivotItem Header="支出">
+            <controls:PivotItem Header="支出"  Foreground="#FFEE0808" >
                 <ScrollViewer>
                     <Grid>
                         <StackPanel Orientation="Vertical" VerticalAlignment="Top">
